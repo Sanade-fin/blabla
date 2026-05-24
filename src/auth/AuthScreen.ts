@@ -1,9 +1,8 @@
 import { sound } from '../audio/SoundManager';
 import { authService } from '../core/AuthService';
+import { setPrivacyConsent } from '../core/PrivacyConsent';
 import { playerStore } from '../core/PlayerStore';
-import { showHelpModal } from '../ui/HelpModal';
 import { footerLinksHtml, bindFooterLinks } from '../ui/PrivacyModal';
-import '../styles/global.css';
 
 export class AuthScreen {
   private root: HTMLElement;
@@ -23,9 +22,9 @@ export class AuthScreen {
         <div class="auth-screen__bg"></div>
         <div class="auth-card">
           <div class="auth-card__logo">COSMIC DESTROYER</div>
-          <p class="auth-card__sub">Войдите или создайте аккаунт — прогресс и достижения сохраняются на устройстве</p>
-          <div class="auth-tabs">
-            <button type="button" class="auth-tab ${isLogin ? 'active' : ''}" data-mode="login">Вход</button>
+          <p class="auth-card__sub">Войдите или зарегистрируйтесь — прогресс сохраняется в браузере</p>
+          <div class="auth-tabs" role="tablist">
+            <button type="button" class="auth-tab ${isLogin ? 'active' : ''}" data-mode="login">Войти</button>
             <button type="button" class="auth-tab ${!isLogin ? 'active' : ''}" data-mode="register">Регистрация</button>
           </div>
           <form class="auth-form" id="auth-form">
@@ -39,10 +38,9 @@ export class AuthScreen {
             </label>
             ${!isLogin ? '<p class="auth-hint">Данные хранятся локально в браузере (офлайн-аккаунт)</p>' : ''}
             <p class="auth-error hidden" id="auth-error"></p>
-            <button type="submit" class="btn-primary auth-submit">${isLogin ? 'Войти в ангар' : 'Создать аккаунт'}</button>
+            <button type="submit" class="btn-primary auth-submit">${isLogin ? 'Войти' : 'Зарегистрироваться'}</button>
           </form>
-          <button type="button" class="btn-how-to-play" id="auth-howto">📖 Как играть</button>
-          <div class="auth-footer">${footerLinksHtml()}</div>
+          <div class="auth-footer">${footerLinksHtml({ showHelp: true })}</div>
         </div>
       </div>
     `;
@@ -56,7 +54,6 @@ export class AuthScreen {
 
     const form = this.root.querySelector('#auth-form') as HTMLFormElement;
     form.addEventListener('submit', (e) => this.onSubmit(e));
-    this.root.querySelector('#auth-howto')!.addEventListener('click', () => showHelpModal());
     bindFooterLinks(this.root);
   }
 
@@ -78,6 +75,8 @@ export class AuthScreen {
       errEl.classList.remove('hidden');
       return;
     }
+
+    setPrivacyConsent(true);
 
     const session = authService.getSession()!;
     if ('isNew' in result && result.isNew) {

@@ -1,4 +1,5 @@
 import { setPrivacyConsent } from '../core/PrivacyConsent';
+import { showHelpModal } from './HelpModal';
 
 export function showPrivacyModal(onAccepted?: () => void): void {
   const overlay = document.createElement('div');
@@ -26,13 +27,18 @@ export function showPrivacyModal(onAccepted?: () => void): void {
   });
 }
 
-export function footerLinksHtml(opts?: { showSupport?: boolean }): string {
+export function footerLinksHtml(opts?: { showSupport?: boolean; showHelp?: boolean }): string {
+  const help =
+    opts?.showHelp === true
+      ? `<button type="button" class="footer-link" data-action="help">Как играть</button><span class="footer-link-sep">·</span>`
+      : '';
   const support =
     opts?.showSupport !== false
       ? `<span class="footer-link-sep">·</span><span class="footer-support">Поддержка: support@cosmic-destroyer.local</span>`
       : '';
   return `
     <div class="app-footer-links">
+      ${help}
       <button type="button" class="footer-link" data-action="privacy">Политика данных</button>
       ${support}
     </div>
@@ -42,5 +48,8 @@ export function footerLinksHtml(opts?: { showSupport?: boolean }): string {
 export function bindFooterLinks(root: ParentNode): void {
   root.querySelectorAll('[data-action="privacy"]').forEach((btn) => {
     (btn as HTMLButtonElement).onclick = () => showPrivacyModal();
+  });
+  root.querySelectorAll('[data-action="help"]').forEach((btn) => {
+    (btn as HTMLButtonElement).onclick = () => showHelpModal();
   });
 }

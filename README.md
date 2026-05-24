@@ -28,3 +28,9 @@ Open http://localhost:5173
 - Onboarding tooltip
 - Save persists in `localStorage`
 - Haptic feedback on loot (where supported)
+
+## C1;8:0F8O (GitHub Pages)
+
+>A;5 push 2 `main` A09B A>18@05BAO 02B><0B8G5A:8: **https://sanade-fin.github.io/blabla/**
+
+ =0AB@>9:0E @5?>78B>@8O: **Settings ’ Pages ’ Build and deployment ’ GitHub Actions**.

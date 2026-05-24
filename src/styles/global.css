@@ -400,7 +400,7 @@ button {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1163,6 +1163,8 @@ button {
 
 .auth-card {
   position: relative;
+  z-index: 2;
+  pointer-events: auto;
   width: min(420px, 92vw);
   padding: 32px 28px;
   background: rgba(15, 23, 42, 0.95);
@@ -1196,14 +1198,17 @@ button {
 
 .auth-tab {
   flex: 1;
+  min-height: 44px;
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: transparent;
   color: var(--muted);
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .auth-tab.active {
@@ -1259,7 +1264,9 @@ button {
 
 .auth-submit {
   width: 100%;
+  min-height: 48px;
   margin-top: 8px;
+  touch-action: manipulation;
 }
 
 .btn-icon {

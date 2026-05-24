@@ -1,6 +1,6 @@
+import './styles/global.css';
 import { AuthScreen } from './auth/AuthScreen';
 import { authService } from './core/AuthService';
-import { hasPrivacyConsent, showPrivacyGate } from './core/PrivacyConsent';
 import { playerStore } from './core/PlayerStore';
 import { sound } from './audio/SoundManager';
 import { HangarApp } from './hangar/HangarApp';
@@ -59,10 +59,6 @@ function continueBoot(): void {
 }
 
 function boot(): void {
-  if (!hasPrivacyConsent()) {
-    showPrivacyGate(app, continueBoot);
-    return;
-  }
   continueBoot();
 }
 
